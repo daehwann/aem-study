@@ -1,0 +1,402 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.daehwan.learning</groupId>
+	<artifactId>aem-study</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+	<name>aem-study</name>
+	
+	<properties>
+		<crx.host>localhost</crx.host>
+		<crx.port>4502</crx.port>
+		<crx.username>admin</crx.username>
+		<crx.password>admin</crx.password>
+	</properties>
+	<repositories>
+		<repository>
+			<id>adobe</id>
+			<name>Adobe Public Repository</name>
+			<url>http://repo.adobe.com/nexus/content/groups/public/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>adobe</id>
+			<name>Adobe Public Repository</name>
+			<url>http://repo.adobe.com/nexus/content/groups/public/</url>
+			<layout>default</layout>
+		</pluginRepository>
+	</pluginRepositories>
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<!-- Apache Felix SCR Plugin -->
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-scr-plugin</artifactId>
+				<version>1.17.0</version>
+				<executions>
+					<execution>
+						<id>generate-scr-scrdescriptor</id>
+						<goals>
+							<goal>scr</goal>
+						</goals>
+						<configuration>
+							<!-- Private service properties for all services. -->
+							<properties>
+								<service.vendor>Daehwan</service.vendor>
+							</properties>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
+		        </configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-simple</artifactId>
+						<version>1.5.11</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.sling</groupId>
+				<artifactId>maven-sling-plugin</artifactId>
+				<version>2.0.6</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>install</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<slingUrl>http://${crx.host}:${crx.port}/crx/repository/crx.default</slingUrl>
+					<usePut>true</usePut>
+					<failOnError>true</failOnError>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.1.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<!--  -->
+						<!-- 
+							Created-By: Apache Maven Bundle Plugin 
+							Private-Package: org.wso2.mbp.helloworld
+							Bundle-ManifestVersion: 2 
+							Bundle-SymbolicName: org.wso2.mbp.helloworld
+							Bundle-Name: helloworld 
+							Bundle-Version: 1.0.0 
+							Bundle-Activator: org.wso2.mbp.helloworld.Activator 
+							Import-Package: org.osgi.framework
+						 -->
+						<Created-By>Daehwan</Created-By>
+						<Bundle-SymbolicName>com.daehwan.learning</Bundle-SymbolicName>
+						<Bundle-Name>Daehwan learning</Bundle-Name>
+						<Bundle-Version>${pom.version}</Bundle-Version>
+						<Bundle-Category>adam</Bundle-Category>
+						<Bundle-Activator>com.daehwan.learning.Activator</Bundle-Activator>
+						<!-- <Bundle-ClassPath>.,/libs/jsso-agent.jar</Bundle-ClassPath>
+						<Dynamic-Import>*</Dynamic-Import>
+						<Include-Resource>lib=/libs</Include-Resource>
+						<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
+						<Embed-Directory>OSGI-INF/lib</Embed-Directory>
+						<Embed-Transitive>true</Embed-Transitive> --> 
+						<Export-Package>
+							com.daehwan.learning.felix.webconsole,
+							com.daehwan.learning.workflow
+						</Export-Package>
+						<!-- <Private-Package>com.amorepacific.adam.core.impl.*</Private-Package> -->
+						<Import-Package>
+							!org.slf4j.impl,
+							*
+						</Import-Package>
+                   </instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<!-- Development profile: install only the bundle -->
+		<profile>
+			<id>autoInstallBundle</id>
+			<activation>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.sling</groupId>
+						<artifactId>maven-sling-plugin</artifactId>
+						<configuration>
+							<!-- Note that this requires /apps/multiupload/install to exist!!          -->
+							<!--    This is typically the case when ui.apps is deployed first                -->
+							<!--    Otherwise, create /apps/multiupload/install manually (CRXDE|Lite)  -->
+							<slingUrlSuffix>/apps/aem-study/install/</slingUrlSuffix>
+							<failOnError>true</failOnError>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	<dependencies>
+		<!-- <dependency>
+			<groupId>org.apache.jackrabbit</groupId>
+			<artifactId>jackrabbit-standalone</artifactId>
+			<version>1.6.5</version>
+		</dependency>
+		osgi & felix
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.scr</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.scr.annotations</artifactId>
+			<version>1.9.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.framework</artifactId>
+			<version>4.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.ipojo.annotations</artifactId>
+			<version>1.11.2</version>
+		</dependency>
+		felix web console
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.webconsole</artifactId>
+			<version>4.2.0</version>
+		</dependency>
+		sling
+		<dependency>
+			<groupId>org.apache.sling</groupId>
+			<artifactId>org.apache.sling.jcr.api</artifactId>
+			<version>2.1.0</version>
+		</dependency> test-->
+		
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.webconsole</artifactId>
+			<version>4.2.0</version>
+		</dependency>
+		<dependency>
+	        <groupId>com.day.cq.workflow</groupId>
+	        <artifactId>cq-workflow-api</artifactId>
+	        <version>5.5.0</version>
+	        <scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>4.2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+			<version>4.2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.scr</artifactId>
+			<version>1.6.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.scr.annotations</artifactId>
+			<version>1.9.6</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>biz.aQute</groupId>
+			<artifactId>bndlib</artifactId>
+			<version>1.43.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.10</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.jcr</groupId>
+			<artifactId>jcr</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.sling</groupId>
+			<artifactId>org.apache.sling.api</artifactId>
+			<version>2.8.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.sling</groupId>
+			<artifactId>org.apache.sling.jcr.api</artifactId>
+			<version>2.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.day.cq.wcm</groupId>
+			<artifactId>cq-msm-api</artifactId>
+			<version>5.6.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Workflow -->
+		<dependency>
+			<groupId>com.adobe.granite</groupId>
+			<artifactId>com.adobe.granite.workflow.api</artifactId>
+			<version>1.0.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.day.cq.workflow</groupId>
+			<artifactId>cq-workflow-api</artifactId>
+			<version>5.6.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Sling Auth -->
+		<dependency>
+			<groupId>org.apache.sling</groupId>
+			<artifactId>org.apache.sling.auth.core</artifactId>
+			<version>1.0.7-R1239106</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.jackrabbit</groupId>
+			<artifactId>jackrabbit-api</artifactId>
+			<version>1.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.adobe.granite</groupId>
+			<artifactId>com.adobe.granite.asset.api</artifactId>
+			<version>1.6</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.sling</groupId>
+			<artifactId>org.apache.sling.models.api</artifactId>
+			<version>1.0.0</version>
+			<!-- org.apache.sling.models.api -->
+		</dependency>
+				
+		<!-- Apache Sling Dependencies -->
+		<dependency>
+			<groupId>com.adobe.aem</groupId>
+			<artifactId>aem-api</artifactId>
+			<version>6.0.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- ADAM Bundles -->
+		<dependency>
+			<groupId>com.amorepacific.adam</groupId>
+			<artifactId>adam-commons</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>bundle</type>
+		</dependency>
+		<dependency>
+			<groupId>com.amorepacific.adam</groupId>
+			<artifactId>adam-interfaces</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>bundle</type>
+		</dependency>
+		
+		<!-- apache -->
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+			<scope>provided</scope>
+		</dependency>		
+		
+		<dependency>
+			<groupId>org.apache.sling</groupId>
+			<artifactId>org.apache.sling.models.api</artifactId>
+			<version>1.0.0</version>
+			<!-- org.apache.sling.models.api -->
+		</dependency>
+		<dependency>
+			<groupId>org.apache.sling</groupId>
+			<artifactId>org.apache.sling.models.impl</artifactId>
+			<version>1.0.2</version>
+			<!-- org.apache.sling.models.impl -->
+		</dependency>
+		
+		<!-- Sling Auth -->
+		<dependency>
+			<groupId>org.apache.sling</groupId>
+			<artifactId>org.apache.sling.auth.core</artifactId>
+			<version>1.0.7-R1239106</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.jackrabbit</groupId>
+			<artifactId>jackrabbit-jcr-commons</artifactId>
+			<version>2.8.0</version>
+			<scope>provided</scope>
+		</dependency>		
+		<dependency>
+			<groupId>org.apache.jackrabbit</groupId>
+			<artifactId>jackrabbit-api</artifactId>
+			<version>2.6.0</version>
+			<scope>provided</scope>
+			<!-- org.apache.jackrabbit.api -->
+		</dependency>
+		<dependency>
+			<groupId>com.day.crx.sling</groupId>
+			<artifactId>crx-auth-token</artifactId>
+			<version>2.4.30</version>
+			<scope>provided</scope>
+			<!-- com.day.crx.security.token -->
+		</dependency>
+	</dependencies>
+</project>
