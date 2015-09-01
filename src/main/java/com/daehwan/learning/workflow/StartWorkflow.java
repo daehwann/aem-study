@@ -53,6 +53,10 @@ public class StartWorkflow{
 		logger.info("____ACTIVATED____");
 		tmpPath = PropertiesUtil.toString(config.get(PROP_NAME), DEFAULT_SAMPLE);
 		
+		//doProcess();
+	}
+	
+	public void doProcess(){
 		logger.info("____RUN____" + tmpPath);
 		try {
 			ResourceResolver resourceResolver = resolverFactory.getAdministrativeResourceResolver(null);

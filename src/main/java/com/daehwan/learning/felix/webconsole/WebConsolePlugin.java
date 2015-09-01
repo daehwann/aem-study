@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
@@ -22,7 +23,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * Simple webconsole which gives an overview of the topology visible by the
  * discovery service
  */
-@Component
+@Component(immediate=true)
 @Service
 @Properties({
     @Property(name=org.osgi.framework.Constants.SERVICE_DESCRIPTION,
@@ -39,6 +40,8 @@ public class WebConsolePlugin extends AbstractWebConsolePlugin {
 	
 	private ServiceTracker repositoryTracker;
 	
+	@Activate
+	@Override
 	public void activate(BundleContext ctx){
 		System.out.println("________web console activated_____");
 		super.activate(ctx);
