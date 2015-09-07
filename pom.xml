@@ -113,10 +113,10 @@
 						<Bundle-Activator>com.daehwan.learning.Activator</Bundle-Activator>
 						<!-- <Bundle-ClassPath>.,/libs/jsso-agent.jar</Bundle-ClassPath>
 						<Dynamic-Import>*</Dynamic-Import>
-						<Include-Resource>lib=/libs</Include-Resource>
 						<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
 						<Embed-Directory>OSGI-INF/lib</Embed-Directory>
-						<Embed-Transitive>true</Embed-Transitive> --> 
+						<Embed-Transitive>true</Embed-Transitive> -->
+						<!-- <Include-Resource>resources</Include-Resource> --> 
 						<Export-Package>
 							com.daehwan.learning.felix.webconsole,
 							com.daehwan.learning.workflow
