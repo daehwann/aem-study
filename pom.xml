@@ -109,7 +109,7 @@
 						<Bundle-SymbolicName>com.daehwan.learning</Bundle-SymbolicName>
 						<Bundle-Name>Daehwan learning</Bundle-Name>
 						<Bundle-Version>${pom.version}</Bundle-Version>
-						<Bundle-Category>adam</Bundle-Category>
+						<Bundle-Category>daehwan</Bundle-Category>
 						<Bundle-Activator>com.daehwan.learning.Activator</Bundle-Activator>
 						<!-- <Bundle-ClassPath>.,/libs/jsso-agent.jar</Bundle-ClassPath>
 						<Dynamic-Import>*</Dynamic-Import>
@@ -121,7 +121,7 @@
 							com.daehwan.learning.felix.webconsole,
 							com.daehwan.learning.workflow
 						</Export-Package>
-						<!-- <Private-Package>com.amorepacific.adam.core.impl.*</Private-Package> -->
+						<!-- <Private-Package>com.daehwan.learning.workflow.impl.*</Private-Package> -->
 						<Import-Package>
 							!org.slf4j.impl,
 							*
