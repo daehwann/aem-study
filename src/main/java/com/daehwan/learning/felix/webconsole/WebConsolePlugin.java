@@ -60,7 +60,7 @@ public class WebConsolePlugin extends AbstractWebConsolePlugin {
 		System.out.println("________web console activated_____");
 		super.activate(ctx);
 		try {
-			//Get template, path : src/main/base.html
+			//Get template, path : src/main/resources/base.html
 			URL url = ctx.getBundle().getEntry("base.html");
 			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 			StringBuffer html = new StringBuffer();
