@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Property;
+import org.apache.felix.scr.annotations.PropertyOption;
 
 @Component(immediate=true, metatype=true, label = "Property Setting", description = "Modifiable felix setting guide")
 public class PropertySetting {
@@ -17,6 +18,12 @@ public class PropertySetting {
 	
 	@Property(intValue=1, label = "Boolean Parameter", description = "Example of a component parameter")	
 	private static final String SAMPLE_INTEGER = "param.int";
+	
+	@Property(options={@PropertyOption(name="NORM",value="Norm"),
+        @PropertyOption(name="MIN",value="Min"),
+        @PropertyOption(name="MAX",value="Max")}
+	, value="Norm", label="Select Options", description="Example of select box")
+	private static final String SAMPLE_SELECT = "param.select";
 	
 	@Activate
 	protected void activate(final Map<String, Object> props) {
