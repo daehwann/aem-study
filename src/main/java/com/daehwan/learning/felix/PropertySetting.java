@@ -36,6 +36,6 @@ public class PropertySetting {
 		
 		for (Entry<String, Object> entry : props.entrySet()){
 			logger.debug(String.format("%s : %s", entry.getKey(), entry.getValue()));
-		}
+		} 
 	}
 }
