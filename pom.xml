@@ -118,7 +118,7 @@
 						<Embed-Transitive>true</Embed-Transitive> -->
 						<!-- <Include-Resource>resources</Include-Resource> --> 
 						<Export-Package>
-							com.daehwan.learning.felix.webconsole,
+							com.daehwan.learning.felix,
 							com.daehwan.learning.workflow
 						</Export-Package>
 						<!-- <Private-Package>com.daehwan.learning.workflow.impl.*</Private-Package> -->
