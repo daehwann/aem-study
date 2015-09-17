@@ -7,9 +7,14 @@ import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.PropertyOption;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component(immediate=true, metatype=true, label = "Property Setting", description = "Modifiable felix setting guide")
 public class PropertySetting {
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
 	@Property(boolValue=true, label = "Boolean Parameter", description = "Example of a component parameter")	
 	private static final String SAMPLE_BOOLEAN = "param.bool"; 
 
@@ -27,11 +32,10 @@ public class PropertySetting {
 	
 	@Activate
 	protected void activate(final Map<String, Object> props) {
-		System.out.println("Property activated");
+		logger.debug("Property activated");
 		
 		for (Entry<String, Object> entry : props.entrySet()){
-			System.out.printf("%s : %s\n", entry.getKey(), entry.getValue());
+			logger.debug(String.format("%s : %s", entry.getKey(), entry.getValue()));
 		}
-		System.out.println(props.get(SAMPLE_BOOLEAN));
 	}
 }
