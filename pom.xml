@@ -328,20 +328,6 @@
 			<scope>provided</scope>
 		</dependency>
 		
-		<!-- ADAM Bundles -->
-		<dependency>
-			<groupId>com.amorepacific.adam</groupId>
-			<artifactId>adam-commons</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<type>bundle</type>
-		</dependency>
-		<dependency>
-			<groupId>com.amorepacific.adam</groupId>
-			<artifactId>adam-interfaces</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<type>bundle</type>
-		</dependency>
-		
 		<!-- apache -->
 		<dependency>
 			<groupId>commons-collections</groupId>
