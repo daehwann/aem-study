@@ -42,6 +42,7 @@ import com.daehwan.learning.asset.RunableValidator;
             value="Apache Sling Web Console Plugin to make web console template"),
     @Property(name=WebConsoleConstants.PLUGIN_LABEL, value=WebConsolePlugin.LABEL),
     @Property(name=WebConsoleConstants.PLUGIN_TITLE, value=WebConsolePlugin.TITLE),
+    @Property(name=WebConsoleConstants.PLUGIN_CATEGORY, value="AEM Study"),
     @Property(name="felix.webconsole.configprinter.modes", value={"zip"})
 })
 @SuppressWarnings("serial")
