@@ -27,8 +27,6 @@ import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.amorepacific.adam.commons.util.PolicyUtil;
-
 @Component(immediate=true, metatype=true, label = "Policy Validator", description = "Policy Validator : Check Policy")
 @Service(value=PolicyValidator.class)
 public class PolicyValidator {
